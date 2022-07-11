@@ -15,19 +15,35 @@ class Node {
 
 class Solution {
     public Node copyRandomList(Node head) {
-        
-        Node cur = head;
-        HashMap<Node , Node> deepCopy = new HashMap<Node, Node>();
-        while(cur != null){
-            deepCopy.put(cur , new Node(cur.val));
-            cur = cur.next;
+        Node iter = head , next;
+        while(iter !=null){
+            next = iter.next;
+            Node copy = new Node(iter.val);
+            iter.next = copy;
+            copy.next = next;
+            iter = next;
         }
-        cur  = head;
-        while( cur != null){
-            deepCopy.get(cur).next = deepCopy.get(cur.next);
-            deepCopy.get(cur).random = deepCopy.get(cur.random);
-            cur  = cur.next;
+        iter = head;
+        while( iter != null){
+            if(iter.random != null){
+                iter.next.random = iter.random.next;
+            }
+            iter = iter.next.next;
+            
         }
-        return deepCopy.get(head);
+        iter = head;
+        Node pseudohead = new Node(0);
+        Node copy , copyIter = pseudohead;
+        while(iter != null){
+            next  = iter.next.next;
+            copy = iter.next;
+            copyIter.next = copy;
+            copyIter = copy;
+            
+            iter.next = next;
+            iter = next;
+            
+        }
+        return pseudohead.next;
     }
 }
