@@ -15,18 +15,10 @@ class Solution {
         if( ln == 0){
             return null;
         }
-        if(ln == 1){
-            return lists[0];
-        }
         head = lists[0];
         System.out.println(ln);
         for(int i = 1  ;i < ln ; i++){
             head = mergeTwoSortedLinkedList(head , lists[i]);
-        }
-        ListNode cur = head;
-        while(cur != null){
-            System.out.println(cur.val);
-            cur  = cur.next;
         }
         return head;
     }
