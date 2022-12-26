@@ -7,19 +7,21 @@ using namespace std;
 class Solution {
 
   public:
-    int f(int ind , vector<int>& dp , vector<int>& height){
-        if(ind == 0 ) return 0;
-        if(dp[ind] != -1) return dp[ind];
-        int left = f(ind - 1 , dp , height) + abs(height[ind] - height[ind-1]);
-        int right = INT_MAX;
-        if(ind> 1) right = f(ind -2 , dp , height) + abs(height[ind] - height[ind-2]);
-        return dp[ind] =  min(left , right);
-        
-    }
+
     int minimumEnergy(vector<int>& height, int n) {
         // Code here
-        vector<int> dp(n+1 , -1);
-        return f(n-1 , dp , height);
+        //vector<int> dp(n+1 , -1);
+        int prev  = 0 ; 
+        int prev2 = 0 ;
+        for(int i = 1 ;i < n ; i++){
+            int fs = prev + abs(height[i] - height[i-1]);
+            int ss = INT_MAX;  
+            if(i > 1) ss = prev2 + abs(height[i] - height[i-2]);
+            int cur = min(fs , ss);
+            prev2 = prev ;
+            prev = cur;
+        }
+        return prev;
         
         
     }
