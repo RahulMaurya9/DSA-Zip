@@ -22,9 +22,24 @@ class Solution
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-        vector<vector<int>> dp(n , vector<int>(W+1 , -1));
-        return MaxLoot(n-1 , W, wt , val , dp);
-       // Your code here
+        vector<vector<int>> dp(n , vector<int>(W+1 , 0));
+        //return MaxLoot(n-1 , W, wt , val , dp);
+        for(int i =0 ;i < n ; ++i){
+            if(wt[i] <= W ) dp[i][wt[i]] = val[i];
+        }
+        for(int ind = 1 ; ind < n ; ++ind){
+            for(int weight = 0 ; weight <= W ; ++weight){
+                int nottake = dp[ind-1][weight];
+                int take = INT_MIN;
+                if(wt[ind]<= weight) take = val[ind] + dp[ind-1][ weight - wt[ind]];
+                dp[ind][weight] = max(take , nottake);
+            }
+        }
+        int maxv = 0;
+        for(int i = 0 ; i <=W ; ++i){
+            maxv = max(maxv , dp[n-1][i]);
+        }
+        return maxv;
     }
 };
 
