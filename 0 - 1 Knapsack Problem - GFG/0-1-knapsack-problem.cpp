@@ -24,9 +24,7 @@ class Solution
     { 
         vector<vector<int>> dp(n , vector<int>(W+1 , 0));
         //return MaxLoot(n-1 , W, wt , val , dp);
-        for(int i =0 ;i < n ; ++i){
-            if(wt[i] <= W ) dp[i][wt[i]] = val[i];
-        }
+        for(int i = wt[0] ;i <=W ; ++i) dp[0][i] = val[0];
         for(int ind = 1 ; ind < n ; ++ind){
             for(int weight = 0 ; weight <= W ; ++weight){
                 int nottake = dp[ind-1][weight];
@@ -35,11 +33,7 @@ class Solution
                 dp[ind][weight] = max(take , nottake);
             }
         }
-        int maxv = 0;
-        for(int i = 0 ; i <=W ; ++i){
-            maxv = max(maxv , dp[n-1][i]);
-        }
-        return maxv;
+        return dp[n-1][W];
     }
 };
 
